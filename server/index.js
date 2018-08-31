@@ -6,6 +6,8 @@ require("dotenv").config();
 const port = 3001;
 
 const app = express();
+app.use(json());
+app.use(express.static(`${__dirname}/build`));
 
 massive(process.env.CONNECTION_STRING)
   .then(db => {
@@ -13,7 +15,7 @@ massive(process.env.CONNECTION_STRING)
   })
   .catch(err => console.log(err));
 
-app.use(json());
+app.get("/api/houses", getHouses);
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);

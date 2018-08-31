@@ -1,4 +1,3 @@
-
 module.exports = {
   create: (req, res, next) => {
     const db = req.app.get("db");
@@ -9,29 +8,36 @@ module.exports = {
         res.status(500).send("error");
         console.log(err);
       });
-    },
-  getAll: (req, res, next) => {
-      const db = req.app.get("db");
-      
+  },
+  getHouses: (req, res, next) => {
+    const db = req.app.get("db");
 
-      db get_houses()
+    db.get_houses()
       .then(houses => res.send(houses))
       .catch(err => {
         res.status(500).send("error");
         console.log(err);
-    })
-    },
-    update: (req, res, next) => {
-        const db = req.app.get("db");
-        const {params, query} = req;
-        db.update_house([params.id, query.desc])
-        .then(() => res.sendStatus(200))
-        .catch(err => {
-            res.status(500).send("Error");
-            console.log(err);
-        })
-    }
+      });
+  },
+  update: (req, res, next) => {
+    const db = req.app.get("db");
+    const { params, query } = req;
+    db.update_house([params.id, query.desc])
+      .then(() => res.sendStatus(200))
+      .catch(err => {
+        res.status(500).send("Error");
+        console.log(err);
+      });
+  },
+  delete: (req, res, next) => {
+    const db = req.app.get("db");
+    const { params } = req;
+
+    db.delete_house(params.id)
+      .then(() => res.sendStatus(200))
+      .catch(err => {
+        res.status(500).send("Error");
+        console.log(err);
+      });
+  }
 };
-
-
-
